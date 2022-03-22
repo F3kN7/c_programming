@@ -1,3 +1,10 @@
+/* ::: Multiplicacao de Matrizes Quadradas :::
+*
+* Teste do tempo de execucao de diferentes abordagens de acesso na multiplicacao das matrizes
+*
+*/
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
