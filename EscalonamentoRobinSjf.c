@@ -121,8 +121,9 @@ int main()
 
                   printf("\nProcesso[%s]\t\t\t%d\t\t\t%d\t\t\t%d", ent[i].tarefa, tempo_execucao[i], total - tempo_chegada[i], total - tempo_chegada[i] - tempo_execucao[i]);
 
-                  tempo_espera = tempo_espera + total - tempo_chegada[i] - tempo_execucao[i];
-                  tempo_retorno = tempo_retorno + total - tempo_chegada[i];
+                  tempo_espera += total - tempo_chegada[i] - tempo_execucao[i];
+                  tempo_retorno += total - tempo_chegada[i];
+                  
                   contador = 0;
             }
             if (i == qnt_processos - 1)
@@ -194,6 +195,7 @@ int main()
       }
 
       m_tempo_retorno_sjf = (float)total_sjf / (float)qnt_processos;
+      
       printf("\n\nMedia do Tempo de Espera:\t%f", m_tempo_espera_sjf);
       printf("\nMedia do Tempo de Retorno:\t%f\n", m_tempo_retorno_sjf);
 
