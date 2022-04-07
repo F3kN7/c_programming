@@ -180,7 +180,7 @@ int main()
             total_sjf += t_espera_sjf[i];
       }
 
-      m_tempo_espera_sjf = (float)total_sjf / (float)qnt_processos;
+      m_tempo_espera_sjf = (float)total_sjf / qnt_processos;
       total_sjf = 0;
 
       printf("\nProcesso ID\t\tTempo de surto\t\tTempo de Espera\t\tTempo de Retorno\n");
@@ -193,7 +193,7 @@ int main()
             printf("\nProcesso[%s]\t\t\t%d\t\t\t%d\t\t\t%d", ent[i].tarefa, tempo_surto[i], t_espera_sjf[i], t_retorno_sjf[i]);
       }
 
-      m_tempo_retorno_sjf = (float)total_sjf / (float)qnt_processos;
+      m_tempo_retorno_sjf = (float)total_sjf / qnt_processos;
       
       printf("\n\nTempo Medio de Espera:\t%f", m_tempo_espera_sjf);
       printf("\nTempo Medio de Retorno:\t%f\n", m_tempo_retorno_sjf);
