@@ -3,8 +3,6 @@
 * Teste do tempo de execucao de diferentes abordagens de acesso na multiplicacao das matrizes
 *
 */
-
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -49,7 +47,6 @@ void SalvaMatriz(int Coluna, int Linha, char *Titulo, char *NomeArquivo, double 
     fprintf(fp, "::: Width: %d | Height: %d | Total Size: %d \n", Coluna, Linha, Coluna * Linha);
     fprintf(fp, "\nAll done! Tempo de processamento: %f segundos.\n", tempoProcessamento);
     fprintf(fp, "___________________________________________________________________");
-
     fprintf(fp, "\n");
 
     fclose(fp);
@@ -64,7 +61,7 @@ void MostraMatrizA(int Altura, int Largura, int *M, char *Titulo)
     {
         for (C = 0; C < Largura; C++)
         {
-            printf(" %2d ", M[L * Largura + C]); //Usando a abordagem A para teste -> M[linha, coluna] -> V[ linha * largura + coluna ]
+            printf(" %2d ", M[L * Largura + C]); // Usando a abordagem A para teste -> M[linha, coluna] -> V[ linha * largura + coluna ]
         }
         printf("\n");
     }
@@ -79,7 +76,7 @@ void MostraMatrizB(int Altura, int Largura, int *M, char *Titulo)
     {
         for (C = 0; C < Largura; C++)
         {
-            printf(" %2d ", M[C * Altura + L]); //Usando a abordagem B para o teste -> M[linha, coluna] -> V[ coluna * altura + linha ]
+            printf(" %2d ", M[C * Altura + L]); // Usando a abordagem B para o teste -> M[linha, coluna] -> V[ coluna * altura + linha ]
         }
         printf("\n");
     }
@@ -93,7 +90,7 @@ void PreencheMatrizA(int Altura, int Largura, int *M, int Valor)
     {
         for (C = 0; C < Largura; C++)
         {
-            M[L * Largura + C] = Valor; //Usando a abordagem A para o teste -> M[linha, coluna] -> V[ linha * largura + coluna ]
+            M[L * Largura + C] = Valor; // Usando a abordagem A para o teste -> M[linha, coluna] -> V[ linha * largura + coluna ]
         }
     }
 }
@@ -106,7 +103,7 @@ void PreencheMatrizB(int Altura, int Largura, int *M, int Valor)
     {
         for (C = 0; C < Largura; C++)
         {
-            M[C * Altura + L] = Valor; //Usando a abordagem B para o teste -> M[linha, coluna] -> V[ coluna * altura + linha ]
+            M[C * Altura + L] = Valor; // Usando a abordagem B para o teste -> M[linha, coluna] -> V[ coluna * altura + linha ]
         }
     }
 }
@@ -191,7 +188,7 @@ int main()
                 {
                     for (K = 0; K < N; K++)
                     {
-                        Mc[L * N + C] += Ma[L * N + K] * Mb[K * N + C]; //Usando a abordagem A para o teste -> M[linha, coluna] -> V[ linha * largura + coluna ]
+                        Mc[L * N + C] += Ma[L * N + K] * Mb[K * N + C]; // Usando a abordagem A para o teste -> M[linha, coluna] -> V[ linha * largura + coluna ]
                     }
                 }
             }
@@ -199,7 +196,7 @@ int main()
             clock_t final = clock();
             double tempoProcessamento = ((double)(final - tempo)) / (double)(CLOCKS_PER_SEC);
 
-            //printf("\nResultado da multiplicacao:\n");
+            // printf("\nResultado da multiplicacao:\n");
             // MostraMatrizA(N, N, Mc, " Matriz C ");
 
             printf("\nAll done! Tempo de processamento: %f segundos.\n", tempoProcessamento);
@@ -252,9 +249,9 @@ int main()
             PreencheMatrizB(N, N, Mc, 0);
 
             printf("Done! Now calculating...\n");
-            //MostraMatrizB(N, N, Ma, " Matriz A ");
-            //MostraMatrizB(N, N, Mb, " Matriz B ");
-            //MostraMatrizB(N, N, Mc, " Matriz C ");
+            // MostraMatrizB(N, N, Ma, " Matriz A ");
+            // MostraMatrizB(N, N, Mb, " Matriz B ");
+            // MostraMatrizB(N, N, Mc, " Matriz C ");
 
             int L, C, K;
 
@@ -278,7 +275,7 @@ int main()
             double tempoProcessamento = ((double)(final - tempo)) / (double)(CLOCKS_PER_SEC);
 
             printf("\nResultado da multiplicacao:\n");
-            //MostraMatrizB(N, N, Mc, " Matriz C ");
+            // MostraMatrizB(N, N, Mc, " Matriz C ");
 
             printf("\nAll done! Tempo de processamento: %f segundos.\n", tempoProcessamento);
             printf("___________________________________________________________________");
