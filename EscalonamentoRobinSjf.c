@@ -1,7 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <strings.h>
-
 /* ESCALONAMENTO DE PROCESSOS 
 *
 *Para leitura do arquivo e armazenamento dos valores corretos o arquivo entrada.txt precisa estar com a seguinte estrutura:
@@ -13,6 +9,9 @@
 *  T4,3,5;
 *
 */
+#include <stdio.h>
+#include <stdlib.h>
+#include <strings.h>
 
 struct entrada // struct entrada
 {
@@ -35,7 +34,7 @@ int main()
       int tempo_quantum;
       int tempo_espera = 0;
       int tempo_retorno = 0;
-      int tempo_chegada[20], tempo_execucao[20], aux[20];
+      int tempo_chegada[20], tempo_surto[20], aux[20];
       int t_espera_sjf[20], t_retorno_sjf[20], posicao[20];
       float media_tempo_espera;
       float media_tempo_retorno;
@@ -80,15 +79,15 @@ int main()
       {
             printf("\nProcesso: [%s]\t", ent[i].tarefa);
 
-            printf("\nTempo de Chegada:\t"); // Arrival Time
+            printf("\nChegada:\t"); // Arrival Time
             tempo_chegada[i] = ent[i].inicio;
             printf("%d", ent[i].inicio);
 
-            printf("\nTempo de Execucao:\t"); // Burst Time
-            tempo_execucao[i] = ent[i].duracao;
+            printf("\nTempo Surto:\t"); // Burst Time
+            tempo_surto[i] = ent[i].duracao;
             printf("%d\n", ent[i].duracao);
 
-            aux[i] = tempo_execucao[i];
+            aux[i] = tempo_surto[i];
       }
 
       // ==================================================================================================
@@ -100,7 +99,7 @@ int main()
       printf("---------------------------------------------------------------------------------------------\n");
       printf("***** ROUND ROBIN *****\n");
 
-      printf("\nProcesso ID\t\tTempo de Execucao\tTempo de Retorno\tTempo de Espera\n"); // Burst Time // Turnaround Time // Waiting Time
+      printf("\nProcesso ID\t\tTempo de surto\t\tTempo de Retorno\tTempo de Espera\n"); // Burst Time // Turnaround Time // Waiting Time
 
       for (total = 0, i = 0; x != 0;)
       {
@@ -119,9 +118,9 @@ int main()
             {
                   x--;
 
-                  printf("\nProcesso[%s]\t\t\t%d\t\t\t%d\t\t\t%d", ent[i].tarefa, tempo_execucao[i], total - tempo_chegada[i], total - tempo_chegada[i] - tempo_execucao[i]);
+                  printf("\nProcesso[%s]\t\t\t%d\t\t\t%d\t\t\t%d", ent[i].tarefa, tempo_surto[i], total - tempo_chegada[i], total - tempo_chegada[i] - tempo_surto[i]);
 
-                  tempo_espera += total - tempo_chegada[i] - tempo_execucao[i];
+                  tempo_espera += total - tempo_chegada[i] - tempo_surto[i];
                   tempo_retorno += total - tempo_chegada[i];
                   
                   contador = 0;
@@ -143,8 +142,8 @@ int main()
       media_tempo_espera = (float)tempo_espera / qnt_processos;
       media_tempo_retorno = (float)tempo_retorno / qnt_processos;
 
-      printf("\n\nMedia do Tempo de Espera:\t%f", media_tempo_espera);
-      printf("\nMedia do Tempo de Retorno:\t%f\n", media_tempo_retorno); 
+      printf("\n\nTempo Medio de Espera:\t%f", media_tempo_espera);
+      printf("\nTempo Medio de Retorno:\t%f\n", media_tempo_retorno); 
 
       // ==================================================================================================
       // Escalonamento Shortest Job First | Trabalho mais curto primeiro | Non-Preemptive
@@ -157,13 +156,13 @@ int main()
             pos = i;
             for (j = i + 1; j < qnt_processos; j++)
             {
-                  if (tempo_execucao[j] < tempo_execucao[pos])
+                  if (tempo_surto[j] < tempo_surto[pos])
                         pos = j;
             }
 
-            aux2 = tempo_execucao[i];
-            tempo_execucao[i] = tempo_execucao[pos];
-            tempo_execucao[pos] = aux2;
+            aux2 = tempo_surto[i];
+            tempo_surto[i] = tempo_surto[pos];
+            tempo_surto[pos] = aux2;
 
             aux2 = posicao[i];
             posicao[i] = posicao[pos];
@@ -176,7 +175,7 @@ int main()
       {
             t_espera_sjf[i] = 0;
             for (j = 0; j < i; j++)
-                  t_espera_sjf[i] += tempo_execucao[j];
+                  t_espera_sjf[i] += tempo_surto[j];
 
             total_sjf += t_espera_sjf[i];
       }
@@ -184,20 +183,20 @@ int main()
       m_tempo_espera_sjf = (float)total_sjf / (float)qnt_processos;
       total_sjf = 0;
 
-      printf("\nProcesso ID\t\tTempo de Execucao\tTempo de Espera\t\tTempo de Retorno\n");
+      printf("\nProcesso ID\t\tTempo de surto\t\tTempo de Espera\t\tTempo de Retorno\n");
 
       for (i = 0; i < qnt_processos; i++)
       {
-            t_retorno_sjf[i] = tempo_execucao[i] + t_espera_sjf[i];
+            t_retorno_sjf[i] = tempo_surto[i] + t_espera_sjf[i];
             total_sjf += t_retorno_sjf[i];
 
-            printf("\nProcesso[%s]\t\t\t%d\t\t\t%d\t\t\t%d", ent[i].tarefa, tempo_execucao[i], t_espera_sjf[i], t_retorno_sjf[i]);
+            printf("\nProcesso[%s]\t\t\t%d\t\t\t%d\t\t\t%d", ent[i].tarefa, tempo_surto[i], t_espera_sjf[i], t_retorno_sjf[i]);
       }
 
       m_tempo_retorno_sjf = (float)total_sjf / (float)qnt_processos;
       
-      printf("\n\nMedia do Tempo de Espera:\t%f", m_tempo_espera_sjf);
-      printf("\nMedia do Tempo de Retorno:\t%f\n", m_tempo_retorno_sjf);
+      printf("\n\nTempo Medio de Espera:\t%f", m_tempo_espera_sjf);
+      printf("\nTempo Medio de Retorno:\t%f\n", m_tempo_retorno_sjf);
 
       return 0;
 }
